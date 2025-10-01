@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Disease Detection</title>
+    <style>
+        /* Light mode styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0f4f8 0%, #dbeafe 100%);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .upload-card {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+
+        h1 {
+            color: #2b6cb0;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+        }
+
+        .upload-form {
+            border: 2px dashed #cbd5e0;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 20px 0;
+            transition: border-color 0.3s;
+        }
+
+        .upload-form:hover {
+            border-color: #4299e1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            color: #2b6cb0; /* Heading color */
+            font-weight: 600; /* Make headings bold */
+        }
+
+        .input-mode {
+            margin-bottom: 20px; /* Add spacing below input mode section */
+
+        }
+
+        .input-mode label {
+            display: inline-block;
+            margin-right: 15px;
+            font-size: 1em;
+            color: #4a5568; /* Subheading color */
+            font-weight: 500; /* Slightly bold */
+            color: black;
+        }
+
+        input[type="file"], select {
+            margin: 15px 0;
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #cbd5e0;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        input[type="submit"] {
+            background: #4299e1;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background: #3182ce;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);
+        }
+
+        .supported-files {
+            color: #718096;
+            font-size: 0.9em;
+            margin-top: 15px;
+        }
+
+        .camera-section, .upload-preview {
+            margin-top: 20px;
+            display: none; /* Hide camera and upload preview sections initially */
+        }
+
+        #cameraPreview, #uploadPreview {
+            width: 100%;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .capture-btn {
+            background: #4299e1;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 1em;
+            transition: background 0.3s;
+        }
+
+        .capture-btn:hover {
+            background: #3182ce;
+        }
+
+        /* Dark mode styles */
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .upload-card {
+            background: #2d3748;
+            color: #e2e8f0;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode input[type="file"], body.dark-mode select {
+            background: #4a5568;
+            color: #e2e8f0;
+            border-color: #4a5568;
+        }
+
+        /* Toggle button */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background 0.3s;
+        }
+
+        .theme-toggle:hover {
+            background: #3182ce;
+        }
+        /* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    body {
+        padding: 20px;
+        height: auto;
+    }
+
+    .upload-card {
+        padding: 20px;
+        width: 100%;
+        margin: 20px;
+    }
+
+    h1 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+
+    .upload-form {
+        padding: 20px;
+    }
+
+    label {
+        font-size: 1em;
+    }
+
+    input[type="file"], select {
+        font-size: 0.9em;
+        padding: 8px;
+    }
+
+    input[type="submit"] {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+
+    .theme-toggle {
+        top: 10px;
+        right: 10px;
+        padding: 8px 12px;
+        font-size: 0.8em;
+    }
+
+    .camera-section video {
+        max-width: 100%;
+    }
+
+    .capture-btn {
+        padding: 8px 16px;
+        font-size: 0.9em;
+    }
+        /* Stack radio buttons vertically */
+    .input-mode div {
+        display: flex;
+        flex-direction: column;
+        gap: 2px; /* Add spacing between radio buttons */
+    }
+
+    .input-mode label {
+
+         margin-left: 10px;
+    }
+    #liveCamera, label[for="liveCamera"] {
+        display: none;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <!-- Dark/Light Mode Toggle Button -->
+    <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark Mode</button>
+
+    <div class="upload-card">
+        <h1>🌿 Plant Disease Detection System</h1>
+
+        <form action="/" method="post" enctype="multipart/form-data" class="upload-form">
+            <!-- Language Selection -->
+            <label for="language">Select Language for Solution:</label>
+            <select name="language" id="language" required>
+                <option value="en">English</option>
+                <option value="hi">Hindi</option>
+            </select>
+
+            <!-- Input Mode Selection -->
+            <div class="input-mode">
+                <label style="color: #2b6cb0;">Select Input Mode:</label>
+                <div>
+                    <input type="radio" id="uploadImage" name="inputMode" value="upload" checked onclick="toggleCameraSection(false)">
+                    <label for="uploadImage" >Upload Image</label>
+                    <input type="radio" id="liveCamera" name="inputMode" value="camera" onclick="toggleCameraSection(true)">
+                    <label for="liveCamera" >Use Live Camera</label>
+                </div>
+            </div>
+
+            <!-- Upload Image Option -->
+            <div id="uploadSection">
+                <label for="file">Upload an Image:</label>
+                <input type="file" name="file" id="file" accept="image/*" onchange="previewUploadedImage(event)">
+                <div class="upload-preview" id="uploadPreviewSection">
+                    <img id="uploadPreview" src="#" alt="Uploaded Image Preview" style="display: none;">
+                </div>
+            </div>
+
+            <!-- Live Camera Option -->
+            <div class="camera-section" id="cameraSection">
+                <video id="cameraPreview" autoplay></video>
+                <button type="button" class="capture-btn" onclick="captureImage()">📸 Capture Image</button>
+                <input type="hidden" name="capturedImage" id="capturedImage">
+            </div>
+
+            <br><br>
+            <input type="submit" value="Analyze Now">
+        </form>
+
+        <p class="supported-files">
+            Supported formats: JPG, JPEG, PNG (Max 200MB)
+        </p>
+    </div>
+
+    <script>
+        // Theme toggle functionality
+        function toggleTheme() {
+            const body = document.body;
+            const toggleButton = document.querySelector('.theme-toggle');
+
+            if (body.classList.contains('dark-mode')) {
+                body.classList.remove('dark-mode');
+                toggleButton.textContent = '🌙 Dark Mode';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.classList.add('dark-mode');
+                toggleButton.textContent = '☀️ Light Mode';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Load saved theme from localStorage
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            document.querySelector('.theme-toggle').textContent = '☀️ Light Mode';
+        }
+
+        // Toggle camera section visibility
+        function toggleCameraSection(showCamera) {
+            const uploadSection = document.getElementById('uploadSection');
+            const cameraSection = document.getElementById('cameraSection');
+            const uploadPreviewSection = document.getElementById('uploadPreviewSection');
+
+            if (showCamera) {
+                uploadSection.style.display = 'none';
+                uploadPreviewSection.style.display = 'none'; // Hide upload preview
+                cameraSection.style.display = 'block';
+                startCamera();
+            } else {
+                uploadSection.style.display = 'block';
+                uploadPreviewSection.style.display = 'block'; // Show upload preview
+                cameraSection.style.display = 'none';
+                stopCamera();
+            }
+        }
+
+        // Start the camera
+        function startCamera() {
+            const video = document.getElementById('cameraPreview');
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    video.srcObject = stream;
+                })
+                .catch(err => {
+                    console.error("Error accessing the camera: ", err);
+                    alert("Camera access denied. Please upload an image instead.");
+                });
+        }
+
+        // Stop the camera
+        function stopCamera() {
+            const video = document.getElementById('cameraPreview');
+            if (video.srcObject) {
+                video.srcObject.getTracks().forEach(track => track.stop());
+            }
+        }
+
+        // Capture image from the camera
+        function captureImage() {
+            const video = document.getElementById('cameraPreview');
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Convert the canvas image to a data URL
+            const imageData = canvas.toDataURL('image/jpeg');
+            document.getElementById('capturedImage').value = imageData; // Store the image data in a hidden input
+
+            // Stop the camera stream
+            stopCamera();
+            alert("Image captured successfully!");
+        }
+
+        // Preview uploaded image
+        function previewUploadedImage(event) {
+            const uploadPreview = document.getElementById('uploadPreview');
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    uploadPreview.src = e.target.result;
+                    uploadPreview.style.display = 'block'; // Show the preview
+                };
+                reader.readAsDataURL(file);
+            } else {
+                uploadPreview.style.display = 'none'; // Hide the preview if no file is selected
+            }
+        }
+    </script>
+</body>
+</html>

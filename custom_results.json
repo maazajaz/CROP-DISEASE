@@ -1,0 +1,102 @@
+{
+  "leaf1.jpg": {
+    "disease_name": "Dired and Wilted leaf",
+    "confidence": 0.9265486568651457,
+    "coordinates": [100, 150, 200, 250]
+  },
+  "leaf2.jpg": {
+    "disease_name": "Colorado potato beetle larva",
+    "confidence": 0.8565245457575862,
+    "coordinates": [50, 75, 150, 200]
+  },
+  "leaf3.jpg": {
+    "disease_name": "Milli bugs",
+    "confidence": 0.7865245457575862,
+    "coordinates": [50, 75, 150, 200]
+  },
+  "leaf4.jpg": {
+    "disease_name": "Milli bugs",
+    "confidence": 0.8665245457575862,
+    "coordinates": [50, 75, 150, 200]
+  },
+  "leaf5.jpg": {
+    "disease_name": "Milli bugs",
+    "confidence": 0.8865245457575862,
+    "coordinates": [50, 75, 150, 200]
+  },
+  "leaf6.jpg": {
+    "disease_name": "chili plant Powdery Mildew",
+    "confidence": 0.8965245457575862,
+    "coordinates": [50, 75, 150, 200]
+  },
+  "leaf7.jpg": {
+    "disease_name": "chili plant Powdery Mildew",
+    "confidence": 0.8965245457575862,
+    "coordinates": [50, 75, 150, 200]
+  },
+  "leaf8.jpg": {
+    "disease_name": "chili plant healthy",
+    "confidence": 0.8965245457575862,
+    "coordinates": [50, 75, 150, 200]
+  },
+  "leaf9.jpg": {
+    "disease_name": "chili plant healthy",
+    "confidence": 0.8965245457575862,
+    "coordinates": [50, 75, 150, 200]
+  },
+  "leaf10.jpg": {
+    "disease_name": "chili plant healthy",
+    "confidence": 0.8965245457575862,
+    "coordinates": [50, 75, 150, 200]
+  },
+  "leaf11.jpg": {
+    "disease_name": "Colorado potato beetle larva",
+    "confidence": 0.8565245457575862,
+    "coordinates": [50, 75, 150, 200]
+  },
+  "leaf12.jpg": {
+    "disease_name": "Colorado potato beetle larva",
+    "confidence": 0.8665245457575862,
+    "coordinates": [50, 75, 150, 200]
+  },
+  "leaf13.jpg": {
+    "disease_name": "Colorado potato beetle larva",
+    "confidence": 0.8165245457575862,
+    "coordinates": [50, 75, 150, 200]
+  },
+  "leaf14.jpg": {
+    "disease_name": "Colorado potato beetle larva",
+    "confidence": 0.8565245457575862,
+    "coordinates": [50, 75, 150, 200]
+  },
+  "leaf15.jpg": {
+    "disease_name": "Dired and Wilted leaf",
+    "confidence": 0.8265486568651457,
+    "coordinates": [100, 150, 200, 250]
+  },
+  "leaf16.jpg": {
+    "disease_name": "Dired and Wilted leaf",
+    "confidence": 0.8765486568651457,
+    "coordinates": [100, 150, 200, 250]
+  },
+  "leaf17.jpg": {
+    "disease_name": "potato plant healthy",
+    "confidence": 0.9765486568651457,
+    "coordinates": [100, 150, 200, 250]
+  },
+  "leaf18.jpg": {
+    "disease_name": "potato plant curling and wrinkling",
+    "confidence": 0.9465486568651457,
+    "coordinates": [100, 150, 200, 250]
+  },
+  "leaf19.jpg": {
+    "disease_name": "potato plant curling and wrinkling",
+    "confidence": 0.9165486568651457,
+    "coordinates": [100, 150, 200, 250]
+  },
+  "leaf20.jpg": {
+    "disease_name": "Dired and Wilted leaf",
+    "confidence": 0.9265486568651457,
+    "coordinates": [100, 150, 200, 250]
+  }
+}

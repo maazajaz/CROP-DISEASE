@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Results</title>
+    <style>
+        /* Light mode styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 20px;
+            color: #2d3748;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .results-container {
+            background: white;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+
+        h1, h2 {
+            color: #2b6cb0;
+            margin-bottom: 25px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4299e1;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        .solution-box {
+            background: #ebf8ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+            border-left: 4px solid #4299e1;
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        .solution-box strong {
+            color: #2b6cb0;
+            display: block;
+            margin: 15px 0 8px;
+            font-size: 1.1em;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+
+        .back-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #4299e1;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #3182ce;
+        }
+
+        #error-text {
+            color: #e53e3e;
+            text-align: center;
+            padding: 15px;
+            display: none;
+        }
+
+        .audio-controls {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .audio-controls button {
+            background: #4299e1;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s;
+            margin: 5px; /* Add spacing between buttons */
+        }
+
+        .audio-controls button:hover {
+            background: #3182ce;
+        }
+
+        /* Dark mode styles */
+        body.dark-mode {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .results-container {
+            background: #2d3748;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode th {
+            background-color: #4299e1;
+            color: white;
+        }
+
+        body.dark-mode td {
+            color: #e2e8f0;
+        }
+
+        body.dark-mode tr:nth-child(even) {
+            background-color: #4a5568;
+        }
+
+        body.dark-mode tr:nth-child(odd) {
+            background-color: #2d3748;
+        }
+
+        body.dark-mode .solution-box {
+            background: #4a5568;
+            border-left-color: #4299e1;
+        }
+
+        body.dark-mode .solution-box strong {
+            color: #63b3ed;
+        }
+
+        /* Toggle button */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background 0.3s;
+        }
+
+        .theme-toggle:hover {
+            background: #3182ce;
+        }
+        /* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .results-container {
+        padding: 20px;
+        margin: 10px;
+    }
+
+    h1 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        font-size: 1.2em;
+    }
+
+    table {
+        font-size: 0.9em;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+
+    .solution-box {
+        padding: 15px;
+    }
+
+    .solution-box strong {
+        font-size: 1em;
+    }
+
+    .back-btn {
+        padding: 8px 16px;
+        font-size: 0.9em;
+    }
+
+    .theme-toggle {
+        top: 10px;
+        right: 10px;
+        padding: 8px 12px;
+        font-size: 0.8em;
+    }
+
+    .audio-controls button {
+        padding: 8px 16px;
+        font-size: 0.9em;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- Dark/Light Mode Toggle Button -->
+    <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark Mode</button>
+
+    <div class="results-container">
+        <h1>🌱 Disease Analysis Report</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Disease Detected</th>
+                    <th>Confidence Level</th>
+                    <th>Location Coordinates</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ prediction.disease_name }}</td>
+                    <td>{{ prediction.confidence }}</td>
+                    <td>{{ prediction.coordinates }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🔍 Processed Image</h2>
+        <img id="processedImage" src="{{ image_path }}" alt="Analysis Result" onerror="handleImageError()">
+        <p id="error-text">⚠️ Image processing failed. Please try again.</p>
+
+        <div class="solution-box">
+            <h2>🩺 Recommended Treatment Plan</h2>
+            <div class="solution-content">
+                {{ solution|safe }}
+            </div>
+            <div class="audio-controls">
+                <button onclick="speakSolution()">🎧 Listen to Solution</button>
+                <button onclick="stopSpeaking()">⏹️ Stop</button>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="/" class="back-btn">Upload New Image</a>
+        </div>
+    </div>
+
+    <!-- Include ResponsiveVoice.js -->
+<script src="https://code.responsivevoice.org/responsivevoice.js?key=Spx7EHwb"></script>
+
+    <script>
+        // Theme toggle functionality
+        function toggleTheme() {
+            const body = document.body;
+            const toggleButton = document.querySelector('.theme-toggle');
+
+            if (body.classList.contains('dark-mode')) {
+                body.classList.remove('dark-mode');
+                toggleButton.textContent = '🌙 Dark Mode';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.classList.add('dark-mode');
+                toggleButton.textContent = '☀️ Light Mode';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Load saved theme from localStorage
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            document.querySelector('.theme-toggle').textContent = '☀️ Light Mode';
+        }
+
+        // Image error handling
+        function handleImageError() {
+            document.getElementById("processedImage").style.display = "none";
+            document.getElementById("error-text").style.display = "block";
+        }
+
+        // Text-to-speech functionality
+        function speakSolution() {
+            const solutionText = document.querySelector('.solution-content').textContent;
+
+            // Use a human-like voice (e.g., 'Hindi Female')
+            responsiveVoice.speak(solutionText, 'Hindi Male', {
+                rate: 1, // Speed of speech (1 = normal)
+                pitch: 1, // Pitch of speech (1 = normal)
+                onend: () => console.log('Speech finished'), // Optional callback
+            });
+        }
+
+        function stopSpeaking() {
+            responsiveVoice.cancel(); // Stop speech
+        }
+    </script>
+</body>
+</html>
