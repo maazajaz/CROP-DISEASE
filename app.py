@@ -19,7 +19,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['OUTPUT_FOLDER'] = OUTPUT_FOLDER
 
 # Load models and data
-model = YOLO('C:/Users/maaza/PycharmProjects/cropdisease using yolov8 test/best.pt')
+model = YOLO('best.pt')
 with open('custom_results.json') as f:
     predefined_diseases = json.load(f)
 
@@ -119,11 +119,25 @@ def process_image(image_path):
     return best_prediction, output_image_path
 
 
+def delete_previous_uploaded_image():
+    """Delete the previously uploaded image in the UPLOAD_FOLDER."""
+    for filename in os.listdir(app.config['UPLOAD_FOLDER']):
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)  # Delete the file
+        except Exception as e:
+            print(f"Failed to delete {file_path}. Reason: {e}")
+
+
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
         language = request.form.get('language', 'en')  # Get selected language
         captured_image = request.form.get('capturedImage')  # Get base64 image from camera
+
+        # Delete the previously uploaded image
+        delete_previous_uploaded_image()
 
         if captured_image:
             # Convert base64 image to a file
